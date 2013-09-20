@@ -35,6 +35,9 @@ public class Node {
         Node leftCopy = (n.left==null ? null : n.left);
         Node rightCopy = (n.right==null ? null : n.right);
         Node parentCopy = (n.parent==null ? null : n.parent);
+        
+        
+        
         return new Node(symbolCopy, leftCopy, rightCopy, parentCopy);
     }
     

@@ -8,7 +8,78 @@ public class Normalize {
 
     private static Stack<Node> allNodes;
     public static boolean runStep2;
-    private static TreeDisplay treeDisplay; //DEBUG
+    
+    /*
+     * 
+     * 
+     * 
+     * 
+     * 
+     * S
+     * T
+     * E
+     * P
+     * 
+     * 2
+     * 
+     * 
+     * 
+     * 
+     */
+    public static Node step3(Node r){
+        allNodes = new Stack<Node>();
+        Node newRoot = null;
+
+        newRoot = r;
+        //add all nodes in the tree starting with ROOT to the stack (recursively)
+        addAll(newRoot);
+        //go through each node in stack and check for a negation
+        while (!allNodes.empty()) {
+            Node n = allNodes.pop();
+            
+            newRoot = n; //result is the last node in the stack OR the returned root from within the if:
+            if (n.symbol.equals("!")) { //If we have a negation
+                newRoot = fixDoubleNegation(n); //distribute it, starting with itself (Node n) //returns the new subRoot
+
+                
+            }
+        }
+
+        return newRoot;
+    }
+    
+    //removes double negation and returns the new root
+    private static Node fixDoubleNegation(Node n){
+      
+      Node nchild = n.right;
+      Node nchildRight = nchild.right;
+      Node nparent = n.parent;
+      
+      //if double negation then delete both
+      if (nchild.symbol.equals("!")){
+        //determine if n is the left or right child of its parent
+        
+        if (nparent != null){
+          
+          if (nparent.left == n) {
+            nparent.left = nchildRight;
+          } else if (nparent.right == n){
+            nparent.right = nchildRight;
+          }
+        }
+        //give nchild its new parent
+        nchildRight.parent = nparent;
+        n = null;
+        nchild = null;
+        return nchildRight;
+      } else {
+        return n;
+      }
+      
+      
+    
+    }
+    
     /*
      * 
      * 
@@ -64,13 +135,13 @@ public class Normalize {
         Node leftChild = Node.copy(and.left);
         Node rightChild = Node.copy(and.right);
 
-
+        //parent doesnt know about these new nodes...
 
         //Check left
         if (leftChild.symbol.equals("v")) { //we have a match!
             //1. 
             moveAndDown(leftChild, and, true);
-            result = leftChild; //this result may get overwritten by right child
+            result = leftChild;
         } else if (rightChild.symbol.equals("v")) { //Otherwise check right
             //1.
             moveAndDown(rightChild, and, false);
@@ -98,6 +169,11 @@ public class Normalize {
         //3.Save the or children
         Node orLeftChild = or.left;
         Node orRightChild = or.right;
+        
+        //3a.UPDATE CHILDS PARENTS TO THE OR COPY
+        //orLeftChild.parent = or;
+        //orRightChild.parent = or;
+        
         //4.Create two new ands with left,right,and parent set
         Node leftAnd;
         Node rightAnd;
@@ -115,8 +191,9 @@ public class Normalize {
         or.left = leftAnd;
         or.right = rightAnd;
 
-        //6. Check if the distribution should continue
+        //6. Garbage
         and = null;
+        
 
 
 

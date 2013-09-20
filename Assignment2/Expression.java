@@ -48,11 +48,14 @@ public class Expression {
       //1) Push negations down
       root = Normalize.step1(root);
       
+      //3) Remove double negations
+       root = Normalize.step3(root);
+       
       //2) Distribute ^ over v
       Normalize.runStep2 = true;
       root = Normalize.step2(root);
       
-      //3) Remove double negations
+      
       
       //DEBUG:
       displayNormalized();
