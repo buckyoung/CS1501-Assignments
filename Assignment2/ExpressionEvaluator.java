@@ -82,13 +82,13 @@ public class ExpressionEvaluator {
                 System.out.println(count + ".  " + expression + " = " + e.evaluate()); //spits out truth value 
                 
                 //DEBUG  ------ ----- ----- ----- 
-                String xxx = "f";
-                while (!(xxx.contains("y")))  {
-                    System.out.println("Display Normalized? y");
-                    xxx = input.readString();
-                }
+               // String xxx = "f";
+              //  while (!(xxx.contains("y")))  {
+              //      System.out.println("Display Normalized? y");
+             //       xxx = input.readString();
+             //   }
                 
-                e.normalize();
+             //   e.normalize();
                 //END DEBUG ---- ---- ---- ----
                 
                 String c = "f";
