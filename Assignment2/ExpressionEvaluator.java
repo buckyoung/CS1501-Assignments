@@ -93,7 +93,7 @@ public class ExpressionEvaluator {
                 
                 String c = "f";
                 while (!(c.contains("y") || c.contains("n")))  {
-                    System.out.println("Continue? y or n");
+                    System.out.println("Continue? y or n : ");
                     c = input.readString();
                 }
                 
