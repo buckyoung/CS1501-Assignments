@@ -1,0 +1,38 @@
+CS 1501 Assignment Information Sheet
+
+- Buck Young -- BCY3@pitt.edu -- 1045 -- Assignment #2
+
+- Recitation: Friday 11:00-11:50am
+Due: 9/24/13
+Completed: 9/20/13
+
+- Source code file names:
+Expression.java
+ExpressionDisplayer.java
+ExpressionEvaluator.java
+Node.java
+Normalize.java
+ParseError.java
+TreeBuilder.java
+
+TreeDisplay.java
+In.java
+
+- Compiled (.jar) file names:
+none associated
+
+- Other file names:
+README.txt
+
+- Does your program compile without errors?
+Yes
+
+- If not, what are the errors?
+
+- Does your program run without error?
+Yes
+
+- If not what are the errors and which part of your program run correctly?
+
+- Additional comments:
+Works as expected -- thank you!
