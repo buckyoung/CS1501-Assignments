@@ -47,11 +47,23 @@ public class ExpressionDisplayer {
 
                 System.out.println(count + ".  " + expression);
                 Expression e = new Expression(expression);
-
                 
                 String c = "f";
                 while (!(c.contains("y") || c.contains("n")))  {
-                    System.out.println("Continue? y or n");
+                    System.out.println("Normalize? y or n : ");
+                    c = input.readString();
+                }
+                
+                 if (c.contains("n")){
+                  System.out.println("Getting next expression...");
+                 } else if (c.contains("y")){
+                   e.normalize();
+                 }
+                
+                
+                c = "f";
+                while (!(c.contains("y") || c.contains("n")))  {
+                    System.out.println("Continue? y or n : ");
                     c = input.readString();
                 }
                 

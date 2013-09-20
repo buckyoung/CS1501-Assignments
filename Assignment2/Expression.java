@@ -54,6 +54,8 @@ public class Expression {
       //2) Distribute ^ over v
       Normalize.runStep2 = true;
       root = Normalize.step2(root);
+      
+      displayNormalized();
     }
 
     public void displayNormalized() { //displays the normalized tree.
