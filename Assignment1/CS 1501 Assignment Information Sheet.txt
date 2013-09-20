@@ -1,0 +1,37 @@
+CS 1501 Assignment Information Sheet
+
+- Buck Young -- Assignment #1
+
+- Recitation: Friday 11:00-11:50am
+Due: 9/10/13
+Completed: 9/9/13
+
+- Source code file names:
+ComputerDistanceBetween.java
+In.java
+StdIn.java
+StdOut.java
+Stopwatch.java
+
+- Compiled (.jar) file names:
+n/a
+
+- Other file names:
+ComputerDistanceBetween.class
+In.class
+StdIn.class
+StdOut.class
+Stopwatch.class
+
+- Does your program compile without errors?
+Yes
+
+- If not, what are the errors?
+
+- Does your program run without error?
+Yes
+
+- If not what are the errors and which part of your program run correctly?
+
+- Additional comments:
+I did a lot of optimization for efficiency. Firstly, I utilized the TreeMap data structure which guarantees log(n) time for the get and put methods -- also TreeMap sorts itself automatically! Furthermore, I did a lot of optimization during the inner-product calculations. And finally, I used the StringTokenizer versus string.split or other possible options because of its speed. The program works as expected, though I did notice that I had one additional distinct word when parsing "dickens.txt" ... the other trial runs were perfect, though. --Thanks!
