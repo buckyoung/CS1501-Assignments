@@ -24,6 +24,7 @@ W true
 X true
 Y true
 Z true
+(!(AvB))
 (T v)
 (! (! (! (! M))))
 (((! S) v (! T)) ^ (! U))

@@ -75,8 +75,8 @@ public class ParseError {
         boolean result = true;
 
         //Check for paren matching:
-        Stack leftParen = new Stack();
-        Stack rightParen = new Stack();
+        Stack<Character> leftParen = new Stack<Character>();
+        Stack<Character> rightParen = new Stack<Character>();
 
 
 
