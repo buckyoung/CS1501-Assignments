@@ -55,8 +55,8 @@ This will continue until the end of file is reached.
 
 
 
-=============== ERRORs ================
-You may notice some errors pop up during the execution of either file. This can be attributed to three things:
+=============== ERROR HANDLING ================
+This system will gracefully handle three error cases:
 1) Illegal Binary Operator: if the expression contains a symbol which is not understood by the parser.
 2) Illegal Character: if the expression has encountered a strange sequence of characters -- usually accredited to 
 the misplacement of a parenthesis.
