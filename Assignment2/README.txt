@@ -74,8 +74,8 @@ visually by:
 |-----------|
 |   symbol  |    : The symbol of this Node "v" or "^" or "!" or any ATOM, A-Z
 |-----------|
-|   value   |    : The truth-value of this node (takes into consideration the value of its children and its own operation)
-|-----------|  
+|   value   |    : The truth-value of this node (takes into consideration the 
+|-----------|                                      value of its children and its own operation)
 \  Lc | Rc  /    : The Left-child and Right-child of this Node
  -----------
 
