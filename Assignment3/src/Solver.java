@@ -1,15 +1,51 @@
 public class Solver {
+  
+  //PRIVATE INNER CLASS SEARCHNODE
+  private class SearchNode implements Comparable { //private inner class Node
+    
+    public Board board;
+    public int moves;
+    public SearchNode previous;
+    
+    public SearchNode(Board b, int m, SearchNode p){
+      board = b;
+      moves = m;
+      previous = p;
+    }
+    
+    public SearchNode(Board initial){ //constructs the initial board
+      board = initial;
+      moves = 0;
+      previous = null;
+    }
+    
+    public int compareTo(Object o){
+      
+      return 0;  
+    }
+    
+  }
  
-  public Solver(Board initial){ //find a solution to the initial board (using the A* algorithm)
+  private Board initial;
+  private int moves;
+  
+  public Solver(Board i){ //find a solution to the initial board (using the A* algorithm)
+    initial = i;
+    moves = 0;
+    
   }
   
-  public boolean isSolvable(){ //is the initial board solvable?
+  //FINISHED
+  public boolean isSolvable(){ //is the initial board solvable? 
+    return initial.isSolvable();
   }
   
   public int moves(){ //min number of moves to solve initial board
+    return moves;
   }
   
   public Iterable<Board> solution(){ //sequence of boards in a shortest solution
+    return null;
   }
   
   public static void main(String[] args){ //solve a slider puzzle (given below)
