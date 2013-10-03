@@ -12,6 +12,22 @@ public class Solver {
     //add initial search node to the pq
     pq.insert(initial);
     
+    do{
+      SearchNode minNode = pq.delMin(); //pull min
+      count++; //iterate count
+      
+      if (!minNode.isGoal()){
+        Iterator<Board> i = minNode.neighbors; //get neighbor iterator
+      
+        //create next node and insert it into the PQ
+        while(i.hasNext()){
+          Board tmp = i.next();
+          SearchNode tempNode = new SearchNode(tmp, count, minNode);
+          pq.insert(tempNode);
+        }
+      }
+         
+    }while(!minNode.isGoal());
     
     
   }
@@ -42,14 +58,6 @@ public class Solver {
                              
        Board initial = new Board(blocks);      // solve the puzzle
        Solver solver = new Solver(initial);    // print solution to standard output
-       
-       //DEBUG
-       Board x = new Board(blocks);
-       Board y = new Board(blocks);
-       
-       System.out.println("HOLY FUCKING SHITNUGGET CUNT: "+ x.equals(y));
-       
-       //ENDDEBUG
          
        if (!initial.isSolvable())
           System.out.println("No solution possible");
