@@ -12,3 +12,6 @@ and then computing the summation of their vectors and the angle between them.
 ###Assignment 2
 Accepts a file of binary expressions (and initial truth values of each atom) and displays them as a tree. 
 The expressions are then normalized (disjunctively ) and evaluated according to the initial, given truth values. 
+
+###Assignment 3
+Solver of the 8puzzle problem using an A* algorithm. Both utilizing the Manhattan and Hamming priority functions for the best-first search.
