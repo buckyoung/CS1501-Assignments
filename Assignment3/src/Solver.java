@@ -43,6 +43,14 @@ public class Solver {
        Board initial = new Board(blocks);      // solve the puzzle
        Solver solver = new Solver(initial);    // print solution to standard output
        
+       //DEBUG
+       Board x = new Board(blocks);
+       Board y = new Board(blocks);
+       
+       System.out.println("HOLY FUCKING SHITNUGGET CUNT: "+ x.equals(y));
+       
+       //ENDDEBUG
+         
        if (!initial.isSolvable())
           System.out.println("No solution possible");
        else {
@@ -84,9 +92,9 @@ public class Solver {
          //ASSUME HAMMING
          if (this.board.equals(tmp.board)){
            result = 0; 
-         } else if (this.board.hamming < tmp.board.hamming) {
+         } else if (this.board.hamming() < tmp.board.hamming()) {
            result = -1;
-         } else if (this.board.hamming > tmp.board.hamming) {
+         } else if (this.board.hamming() > tmp.board.hamming()) {
            result = 1; 
          } else {
            System.out.println("Programming Err: if-else logic is not mutually exclusive");

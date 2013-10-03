@@ -23,6 +23,7 @@ public class Board{
        }
        goal[dimension-1][dimension-1] = 0; //set '*'
        
+       
       
     }
       
