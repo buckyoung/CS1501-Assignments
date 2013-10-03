@@ -1,12 +1,26 @@
 public class Solver {
- 
-  public Solver(Board initial); //find a solution to the initial board (using the A* algorithm)
+
+  private Board initial;
+  public static int count;
   
-  public boolean isSolvable(); //is the initial board solvable?
+  public Solver(Board i){ //find a solution to the initial board (using the A* algorithm)
+    initial = i;
+    count = 0;
+  }
   
-  public int moves(); //min number of moves to solve initial board
+  //FINISHED
+  public boolean isSolvable(){ //is the initial board solvable? 
+    return initial.isSolvable();
+  }
   
-  public Iterable<Board> solution(); //sequence of boards in a shortest solution
+ //FINISHED
+  public int moves(){ //min number of moves to solve initial board
+    return count;
+  }
+  
+  public Iterable<Board> solution(){ //sequence of boards in a shortest solution
+    return null;
+  }
   
   public static void main(String[] args){ //solve a slider puzzle (given below)
     // create initial board from file
@@ -20,7 +34,7 @@ public class Solver {
                              
        Board initial = new Board(blocks);      // solve the puzzle
        Solver solver = new Solver(initial);    // print solution to standard output
-                             
+       
        if (!initial.isSolvable())
           System.out.println("No solution possible");
        else {
@@ -29,6 +43,45 @@ public class Solver {
           for (Board board : solver.solution())
                System.out.println(board);
        }
+  }
+  
+   
+//PRIVATE INNER CLASS SEARCHNODE
+  private class SearchNode implements Comparable { //private inner class Node
+    
+    public Board board;
+    public int moves;
+    public SearchNode previous;
+    
+    
+    public SearchNode(Board b, int m, SearchNode p){
+      board = b;
+      moves = m;
+      previous = p;
+    }
+    
+    public SearchNode(Board initial){ //constructs the initial board
+      board = initial;
+      moves = 0;
+      previous = null;
+    }
+    
+    public int compareTo(Object o){
+      
+      return 0;  
+    }
+    
+    public String toString(){
+       StringBuilder result = new StringBuilder();
+       
+       result.append("Manhattan  = " + board.manhattan() + "\n");
+       result.append("Hamming    = " + board.hamming() + "\n");
+       
+       result.append(board.toString());
+      
+       return result.toString();
+    }
+    
   }
   
 }

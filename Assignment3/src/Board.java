@@ -102,8 +102,27 @@ public class Board{
       return false;
     }
     
+//FINISHED
     public boolean equals(Object y){ //does this board equal y?
-      return false;
+      boolean result = true;
+      
+      if (y instanceof Board){
+        Board tmp = (Board)y;
+      
+        LOOP:for(int i = 0; i < dimension; i++){
+          for (int j = 0; j < dimension; j++){
+            if (this.board[i][j] != tmp.board[i][j]){
+              result = false;
+              break LOOP;
+            }
+          }
+        }
+      } else {
+        result = false;
+      }
+      
+      
+      return result;
     }
     
     public Iterable<Board> neighbors(){ //place all neighboring boards into your iterable Queue (assignment 1)

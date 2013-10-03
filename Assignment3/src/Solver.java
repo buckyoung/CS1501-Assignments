@@ -1,16 +1,24 @@
 public class Solver {
-
-  private Board initial;
+  
+  private SearchNode initial;
   public static int count;
+  private MinPQ<SearchNode> pq; //.insert(SN n) //.delMin()
   
   public Solver(Board i){ //find a solution to the initial board (using the A* algorithm)
-    initial = i;
-    count = 0;
+    initial = new SearchNode(i); //create the initial search node
+    count = 0; //init count 
+    pq = new MinPQ<SearchNode>(); //init pq
+    
+    //add initial search node to the pq
+    pq.insert(initial);
+    
+    
+    
   }
   
   //FINISHED
   public boolean isSolvable(){ //is the initial board solvable? 
-    return initial.isSolvable();
+    return initial.board.isSolvable();
   }
   
  //FINISHED
@@ -66,9 +74,29 @@ public class Solver {
       previous = null;
     }
     
-    public int compareTo(Object o){
+    @Override
+    public int compareTo(Object n){
+      int result = 0;
       
-      return 0;  
+      if ( n instanceof SearchNode){
+         SearchNode tmp = (SearchNode)n;
+         
+         //ASSUME HAMMING
+         if (this.board.equals(tmp.board)){
+           result = 0; 
+         } else if (this.board.hamming < tmp.board.hamming) {
+           result = -1;
+         } else if (this.board.hamming > tmp.board.hamming) {
+           result = 1; 
+         } else {
+           System.out.println("Programming Err: if-else logic is not mutually exclusive");
+           result = 4242;
+         }
+      } else {
+        result = -8008;
+      }
+      
+      return result;  
     }
     
     public String toString(){
