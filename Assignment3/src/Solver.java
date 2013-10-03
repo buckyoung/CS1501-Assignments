@@ -33,7 +33,11 @@ public class Solver {
                              
        Board initial = new Board(blocks);      // solve the puzzle
        Solver solver = new Solver(initial);    // print solution to standard output
-                             
+       
+       //DEBUG
+       System.out.println("H: "+ initial.hamming() + "  M: "+ initial.manhattan());
+       //END DEBUG
+       
        if (!initial.isSolvable())
           System.out.println("No solution possible");
        else {
