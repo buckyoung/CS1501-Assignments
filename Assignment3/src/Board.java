@@ -111,7 +111,18 @@ public class Board{
     }
     
     public String toString(){ //string representation of the board (in the output format specified below)
-      return null;
+      StringBuilder result = new StringBuilder();
+      
+      result.append(dimension + "\n");
+      
+      for (int i = 0; i < dimension; i++){
+        for (int j = 0; j < dimension; j++){
+          result.append(" " + board[i][j]);
+        }
+        result.append("\n");
+      }
+      
+      return result.toString();
     }
     
 }

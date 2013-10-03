@@ -13,6 +13,7 @@ public class Solver {
     return initial.isSolvable();
   }
   
+ //FINISHED
   public int moves(){ //min number of moves to solve initial board
     return count;
   }
@@ -68,6 +69,17 @@ public class Solver {
     public int compareTo(Object o){
       
       return 0;  
+    }
+    
+    public String toString(){
+       StringBuilder result = new StringBuilder();
+       
+       result.append("Manhattan  = " + board.manhattan() + "\n");
+       result.append("Hamming    = " + board.hamming() + "\n");
+       
+       result.append(board.toString());
+      
+       return result.toString();
     }
     
   }
