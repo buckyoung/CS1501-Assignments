@@ -41,15 +41,15 @@ public class Board{
     public boolean isGoal(){ //is this board the goal board?
       boolean result = true;
       
+      //iterate through each element of board and compare to goal
       FOR: for (int i = 0; i < dimension; i++){
              for (int j = 0; j < dimension; j++){
                if (board[i][j] != goal[i][j]){
                  result = false;
-                 break FOR;
+                 break FOR; //shortcircuit
                }
              }
            }
-      
       
       return result;
     }

@@ -1,37 +1,11 @@
 public class Solver {
-  
-  //PRIVATE INNER CLASS SEARCHNODE
-  private class SearchNode implements Comparable { //private inner class Node
-    
-    public Board board;
-    public int moves;
-    public SearchNode previous;
-    
-    public SearchNode(Board b, int m, SearchNode p){
-      board = b;
-      moves = m;
-      previous = p;
-    }
-    
-    public SearchNode(Board initial){ //constructs the initial board
-      board = initial;
-      moves = 0;
-      previous = null;
-    }
-    
-    public int compareTo(Object o){
-      
-      return 0;  
-    }
-    
-  }
- 
+
   private Board initial;
-  private int moves;
+  private static int count;
   
   public Solver(Board i){ //find a solution to the initial board (using the A* algorithm)
     initial = i;
-    moves = 0;
+    count = 0;
     
   }
   
@@ -41,7 +15,7 @@ public class Solver {
   }
   
   public int moves(){ //min number of moves to solve initial board
-    return moves;
+    return count;
   }
   
   public Iterable<Board> solution(){ //sequence of boards in a shortest solution
@@ -69,6 +43,34 @@ public class Solver {
           for (Board board : solver.solution())
                System.out.println(board);
        }
+  }
+  
+   
+//PRIVATE INNER CLASS SEARCHNODE
+  private class SearchNode implements Comparable { //private inner class Node
+    
+    public Board board;
+    public int moves;
+    public SearchNode previous;
+    
+    
+    public SearchNode(Board b, int m, SearchNode p){
+      board = b;
+      moves = m;
+      previous = p;
+    }
+    
+    public SearchNode(Board initial){ //constructs the initial board
+      board = initial;
+      moves = 0;
+      previous = null;
+    }
+    
+    public int compareTo(Object o){
+      
+      return 0;  
+    }
+    
   }
   
 }
