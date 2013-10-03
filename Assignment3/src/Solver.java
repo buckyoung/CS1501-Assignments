@@ -1,12 +1,11 @@
 public class Solver {
 
   private Board initial;
-  private static int count;
+  public static int count;
   
   public Solver(Board i){ //find a solution to the initial board (using the A* algorithm)
     initial = i;
     count = 0;
-    
   }
   
   //FINISHED
