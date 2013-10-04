@@ -105,15 +105,61 @@ public class Board{
       return result;
     }
     
- //todo //#################################################
+ //FINISHED
+    //To be solveable:
+    //If dimension is odd, number of inversions must be Even
+    //If dimension is even, number of inversions + row of blank must be Odd
     public boolean isSolvable(){ //is the board solvable?
-      boolean result = true;
+
+      int inversions = 0; 
       
-      //Odd
+      //Get number of inversions
+      for (int num = 1; num < ((dimension*dimension)-1); num++){ //could be dim^2 - 2, really!
+        NEXTNUM:for (int row = 0; row < dimension; row++){
+          for (int col = 0; col < dimension; col++){
+            //for each index, 
+            if (board[row][col] > num){
+              inversions++;
+            }
+            if (board[row][col] == num){ //SHORT CIRCUIT
+              break NEXTNUM;
+            }
+          }
+        }
+      }
       
-      //Even
+      //Odd/even
+      if (dimension%2 == 1) { //if dimension is ODD
+        //inversions must be even
+        if (inversions%2 == 0){ //even = solvable!
+          return true; //RETURN
+        } else { //odd, unsolvable!
+          return false;
+        }
+          
+      } else { //dimension is EVEN!
+        //Find row of blank
+        int blank_row = 0;
+        LOOP:for (int r = 0; r<dimension; r++){
+          for(int c = 0; c<dimension;c++){
+            if (board[r][c] == 0){ //FOUND!
+              blank_row = r;
+              break LOOP;
+            }
+          }
+        }
+        //Add into inversions
+        inversions += blank_row;
+        
+        //Now, this number must be odd to be solvable
+        if(inversions%2 == 1){//odd, solvable!
+          return true;
+        } else {//even, unsolvable
+          return false;
+        }
       
-      return result;
+      }
+
     }
     
 //FINISHED
