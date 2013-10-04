@@ -5,7 +5,6 @@ public class Board{
   private int[][] board;
   private int[][] goal;
   private int dimension;
-  public int count;
   
   
 //FINISHED
@@ -53,7 +52,7 @@ public class Board{
         }
       }
       
-      result += this.count; //add in current count
+      //TODO //RESULE += COUNT //add in current count
       return result;
     }
     
@@ -87,7 +86,7 @@ public class Board{
       }
     }//end topmost for
       
-      result += this.count; //add in current count
+     //TODO //RESULE += COUNT //add in current count
       return result;
  }
 
@@ -104,11 +103,6 @@ public class Board{
                }
              }
            }
-      
-      //Pass Final Count to solver!
-      if (result == true){
-        Solver.count = this.count;
-      }
       
       return result;
     }
@@ -164,8 +158,6 @@ public class Board{
         Board temp = new Board(this.board); //create temp object //dont want to edit the original board
         temp.board[row][col] = this.board[row][col-1];
         temp.board[row][col-1] = 0;
-        //update count
-        temp.count++;
         //add this temp to q
         q.enqueue(temp);
       }
@@ -175,8 +167,6 @@ public class Board{
         Board temp = new Board(this.board); //create temp object //dont want to edit the original board
         temp.board[row][col] = this.board[row][col+1];
         temp.board[row][col+1] = 0;
-        //update count
-        temp.count++;
         //add this temp to q
         q.enqueue(temp);
       }
@@ -185,8 +175,6 @@ public class Board{
         Board temp = new Board(this.board); //create temp object //dont want to edit the original board
         temp.board[row][col] = this.board[row-1][col];
         temp.board[row-1][col] = 0;
-        //update count
-        temp.count++;
         //add this temp to q
         q.enqueue(temp);
       }
@@ -195,8 +183,6 @@ public class Board{
         Board temp = new Board(this.board); //create temp object //dont want to edit the original board
         temp.board[row][col] = this.board[row+1][col];
         temp.board[row+1][col] = 0;
-        //update count
-        temp.count++;
         //add this temp to q
         q.enqueue(temp);
       }

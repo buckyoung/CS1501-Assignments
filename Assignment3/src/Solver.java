@@ -1,12 +1,12 @@
 public class Solver {
   
   private SearchNode initial;
-  public static int count;
+  public static int finalCount;
   private MinPQ<SearchNode> pq; //.insert(SN n) //.delMin()
   
   public Solver(Board i){ //find a solution to the initial board (using the A* algorithm)
     initial = new SearchNode(i); //create the initial search node
-    count = 0; //init count 
+    finalCount = 0; //init count 
     pq = new MinPQ<SearchNode>(); //init pq
     
     //add initial search node to the pq
@@ -14,25 +14,19 @@ public class Solver {
     
     initial.board.neighbors();
     
-    /*THIS IS SHIT:
-    do{
-      SearchNode minNode = pq.delMin(); //pull min
-      count++; //iterate count
+    do {
       
-      if (!minNode.board.isGoal()){
-        Iterator<Board> i = minNode.neighbors; //get neighbor iterator
+      //Get MinNode from PQ
+      SearchNode minNode = pq.delMin();
+      //Find neighbors
+      Queue<Board> q = minNode.board.neighbors();
+      //Add to PQ
       
-        //create next node and insert it into the PQ
-        while(i.hasNext()){
-          Board tmp = i.next();
-          SearchNode tempNode = new SearchNode(tmp, count, minNode);
-          pq.insert(tempNode);
-        }
-      }
-         
-    }while(!minNode.isGoal());
-    */
+      
+      
+    }while(true);
     
+    //Get final move count
   }
   
   //FINISHED
@@ -42,7 +36,7 @@ public class Solver {
   
  //FINISHED
   public int moves(){ //min number of moves to solve initial board
-    return Solver.count; 
+    return Solver.finalCount; 
   }
   
   public Iterable<Board> solution(){ //sequence of boards in a shortest solution
@@ -60,9 +54,7 @@ public class Solver {
              blocks[i][j] = in.readInt();
                              
        Board initial = new Board(blocks);      // solve the puzzle
-       //initialize initial count
-       initial.count = 0;
-       //^very important!
+
        Solver solver = new Solver(initial);    // print solution to standard output
          
        if (!initial.isSolvable())
