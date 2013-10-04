@@ -1,12 +1,13 @@
+import java.util.Stack;
+
 public class Solver {
   
   private SearchNode initial;
-  public static int finalCount;
+  private SearchNode finalNode;
   private MinPQ<SearchNode> pq; //.insert(SN n) //.delMin()
   
   public Solver(Board i){ //find a solution to the initial board (using the A* algorithm)
     initial = new SearchNode(i); //create the initial search node
-    finalCount = 0; //init count 
     pq = new MinPQ<SearchNode>(); //init pq
     
     //add initial search node to the pq
@@ -14,19 +15,30 @@ public class Solver {
     
     initial.board.neighbors();
     
-    do {
+    DO: do {
       
       //Get MinNode from PQ
       SearchNode minNode = pq.delMin();
+      
+      //Check for goal
+      if (minNode.board.isGoal()){
+         finalNode = minNode; //SAVE THE FINAL NODE!
+         break DO;
+      }
+         
       //Find neighbors
-      Queue<Board> q = minNode.board.neighbors();
-      //Add to PQ
+      Queue<Board> q = (Queue<Board>)minNode.board.neighbors();
+      //Create SearchNodes
+      for (Board b : q){
+        SearchNode newNode = new SearchNode(b, (minNode.moves+1), minNode);
+        //Add to PQ
+        pq.insert(newNode);
+      }
+      //Start again
       
-      
-      
-    }while(true);
+    }while(true); //TODO : this is a problem!
+
     
-    //Get final move count
   }
   
   //FINISHED
@@ -36,11 +48,28 @@ public class Solver {
   
  //FINISHED
   public int moves(){ //min number of moves to solve initial board
-    return Solver.finalCount; 
+    return finalNode.moves; 
   }
   
   public Iterable<Board> solution(){ //sequence of boards in a shortest solution
-    return null;
+    Stack<SearchNode> s = new Stack<SearchNode>();
+    Queue<Board> result = new Queue<Board>();
+
+    SearchNode tmp = finalNode;
+    
+    //enqueue the solution nodes
+    while (tmp != null){
+      //Put tmp in there
+      s.push(tmp);
+      //Get previous
+      tmp = tmp.previous;
+    }
+    
+    while (!s.isEmpty()){
+      result.enqueue(s.pop().board);
+    }
+    
+    return result;
   }
   
   public static void main(String[] args){ //solve a slider puzzle (given below)
@@ -71,9 +100,9 @@ public class Solver {
 //PRIVATE INNER CLASS SEARCHNODE
   private class SearchNode implements Comparable { //private inner class Node
     
-    public Board board;
-    public int moves;
-    public SearchNode previous;
+    private Board board;
+    private int moves;
+    private SearchNode previous;
     
     
     public SearchNode(Board b, int m, SearchNode p){
@@ -96,14 +125,14 @@ public class Solver {
          SearchNode tmp = (SearchNode)n;
          
          //ASSUME HAMMING
-         if (this.board.equals(tmp.board)){
+         if (this.board.hamming()+this.moves == tmp.board.hamming()+tmp.moves){
            result = 0; 
-         } else if (this.board.hamming() < tmp.board.hamming()) {
+         } else if (this.board.hamming()+this.moves < tmp.board.hamming()+tmp.moves) {
            result = -1;
-         } else if (this.board.hamming() > tmp.board.hamming()) {
+         } else if (this.board.hamming()+this.moves > tmp.board.hamming()+tmp.moves) {
            result = 1; 
          } else {
-           System.out.println("Programming Err: if-else logic is not mutually exclusive");
+           System.out.println("Programmer Error: if-else logic is not mutually exclusive");
            result = 4242;
          }
       } else {

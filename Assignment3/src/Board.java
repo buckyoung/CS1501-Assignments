@@ -52,7 +52,6 @@ public class Board{
         }
       }
       
-      //TODO //RESULE += COUNT //add in current count
       return result;
     }
     
@@ -86,7 +85,6 @@ public class Board{
       }
     }//end topmost for
       
-     //TODO //RESULE += COUNT //add in current count
       return result;
  }
 
@@ -131,15 +129,13 @@ public class Board{
         result = false;
       }
       
-      
       return result;
     }
     
-    
+//FINISHED
     public Iterable<Board> neighbors(){ //place all neighboring boards into your iterable Queue (assignment 1)
       Queue<Board> q = new Queue<Board>();
-      
-      //x,y is all messed up -- i misunderstood rows/cols!
+
       int row = 0, col = 0;
       
       //Search for the asterisk
