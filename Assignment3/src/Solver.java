@@ -5,12 +5,14 @@ public class Solver {
   private SearchNode initial;
   private SearchNode finalNode;
   private MinPQ<SearchNode> pq; //.insert(SN n) //.delMin()
+  private static boolean solvable;
   
   //FINISHED -- reduncancy with main
   public Solver(Board i){ //find a solution to the initial board (using the A* algorithm)
     initial = new SearchNode(i); //create the initial search node
+    solvable = true;
     
-  if (isSolvable()){
+  if (initial.board.isSolvable()){
     //add initial search node to the pq
     pq = new MinPQ<SearchNode>(); //init pq
     pq.insert(initial);
@@ -49,15 +51,16 @@ public class Solver {
       
     }while(true); //TODO : this is a problem!
 
+    
   } else { //IS NOT SOLVEABLE
-    System.out.println("Sorry. This board is not solveable.");
+    solvable = false; //helps us short circult the solver.issolvable
   }
     
  }
   
   //FINISHED
-  public boolean isSolvable(){ //is the initial board solvable? 
-    return initial.board.isSolvable();
+  public static boolean isSolvable(){ //is the initial board solvable? 
+    return solvable;
   }
   
  //FINISHED
@@ -102,7 +105,7 @@ public class Solver {
 
        Solver solver = new Solver(initial);    // print solution to standard output
          
-       if (!initial.isSolvable())
+       if (!Solver.isSolvable())//This should call this.isSolvable to save the board the trouble
           System.out.println("No solution possible");
        else {
           System.out.println("Minimum number of moves = " + solver.moves());

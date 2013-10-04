@@ -114,7 +114,8 @@ public class Board{
       int inversions = 0; 
       
       //Get number of inversions
-      for (int num = 1; num < ((dimension*dimension)-1); num++){ //could be dim^2 - 2, really!
+      for (int num = 1; num < ((dimension*dimension)-1); num++){ 
+        System.err.print(".");//DEBUG
         NEXTNUM:for (int row = 0; row < dimension; row++){
           for (int col = 0; col < dimension; col++){
             //for each index, 
@@ -126,7 +127,9 @@ public class Board{
             }
           }
         }
+        
       }
+      System.err.println();
       
       //Odd/even
       if (dimension%2 == 1) { //if dimension is ODD
