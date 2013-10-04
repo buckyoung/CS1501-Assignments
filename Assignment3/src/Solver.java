@@ -28,10 +28,14 @@ public class Solver {
          
       //Find neighbors
       Queue<Board> q = (Queue<Board>)minNode.board.neighbors();
+      
       //Create SearchNodes
       for (Board b : q){
         SearchNode newNode = new SearchNode(b, (minNode.moves+1), minNode);
-        //Add to PQ
+        //Add to PQ if not the previous
+        if (newNode.board.equals(minNode.board)){
+          System.out.println("Equality!");
+        }
         pq.insert(newNode);
       }
       //Start again

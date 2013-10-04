@@ -1,3 +1,5 @@
+import java.util.Stack;
+
 public class Solver {
   
   private SearchNode initial;
@@ -20,7 +22,6 @@ public class Solver {
       
       //Check for goal
       if (minNode.board.isGoal()){
-         System.out.print("WINNER");
          finalNode = minNode; //SAVE THE FINAL NODE!
          break DO;
       }
@@ -35,7 +36,7 @@ public class Solver {
       }
       //Start again
       
-    }while(true);
+    }while(true); //TODO : this is a problem!
 
     
   }
@@ -51,8 +52,24 @@ public class Solver {
   }
   
   public Iterable<Board> solution(){ //sequence of boards in a shortest solution
-    //use searchNode parents
-    return null;
+    Stack<SearchNode> s = new Stack<SearchNode>();
+    Queue<Board> result = new Queue<Board>();
+
+    SearchNode tmp = finalNode;
+    
+    //enqueue the solution nodes
+    while (tmp != null){
+      //Put tmp in there
+      s.push(tmp);
+      //Get previous
+      tmp = tmp.previous;
+    }
+    
+    while (!s.isEmpty()){
+      result.enqueue(s.pop().board);
+    }
+    
+    return result;
   }
   
   public static void main(String[] args){ //solve a slider puzzle (given below)
@@ -106,8 +123,6 @@ public class Solver {
       
       if ( n instanceof SearchNode){
          SearchNode tmp = (SearchNode)n;
-         
-         System.out.println("this: " + (this.board.hamming()+this.moves) +"  tmp: " + (tmp.board.hamming()+tmp.moves) );
          
          //ASSUME HAMMING
          if (this.board.hamming()+this.moves == tmp.board.hamming()+tmp.moves){
