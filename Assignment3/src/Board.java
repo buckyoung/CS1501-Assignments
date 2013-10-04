@@ -10,8 +10,16 @@ public class Board{
   
 //FINISHED
     public Board(int[][] blocks){ //constuct a board from an N by N array of blocks // where blocks[i][j] = block in row i, column j
-       board = blocks;
-       dimension = board.length;
+       dimension = blocks.length;
+       
+       board = new int[dimension][dimension];
+       
+       //deep copy those blocks
+       for (int x=0; x<dimension; x++){
+         for (int y=0; y<dimension; y++){
+           board[x][y] = blocks[x][y];
+         }
+       }
        
        //create goal board
        goal = new int[dimension][dimension];
@@ -105,8 +113,9 @@ public class Board{
       return result;
     }
     
+ //TODO
     public boolean isSolvable(){ //is the board solvable?
-      return false;
+      return true;
     }
     
 //FINISHED
@@ -132,15 +141,17 @@ public class Board{
       return result;
     }
     
+    
     public Iterable<Board> neighbors(){ //place all neighboring boards into your iterable Queue (assignment 1)
       Queue<Board> q = new Queue<Board>();
       
-      int x=0,y=0;
+      //x,y is all messed up -- i misunderstood rows/cols!
+      int row = 0, col = 0;
       
       //Search for the asterisk
-      LOOP:for (x=0;x<dimension;x++){
-        for (y=0;y<dimension;y++){
-          if (board[x][y] == 0){ //found!
+      LOOP:for (row = 0;row<dimension;row++){
+        for (col = 0;col<dimension;col++){
+          if (board[row][col] == 0){ //found!
             break LOOP;
           }
         }
@@ -148,26 +159,47 @@ public class Board{
       
       //We now have the location of the asterisk
       //Let's be careful if it is on the edge of the 2d array:
-      if (x != 0){
+      if (col != 0){
         //swapLeft
         Board temp = new Board(this.board); //create temp object //dont want to edit the original board
-        temp[x][y] = board[x-1][y];
-        temp[x-1][y] = 0;
+        temp.board[row][col] = this.board[row][col-1];
+        temp.board[row][col-1] = 0;
         //update count
         temp.count++;
         //add this temp to q
+        q.enqueue(temp);
       }
-      if (x != dimension-1){
+      
+      if (col != dimension-1){
         //swapRight
+        Board temp = new Board(this.board); //create temp object //dont want to edit the original board
+        temp.board[row][col] = this.board[row][col+1];
+        temp.board[row][col+1] = 0;
+        //update count
+        temp.count++;
+        //add this temp to q
+        q.enqueue(temp);
       }
-      if (y != 0){
+      if (row != 0){
         //swapNorth
+        Board temp = new Board(this.board); //create temp object //dont want to edit the original board
+        temp.board[row][col] = this.board[row-1][col];
+        temp.board[row-1][col] = 0;
+        //update count
+        temp.count++;
+        //add this temp to q
+        q.enqueue(temp);
       }
-      if (y != dimension-1){
+      if (row != dimension-1){
         //swapSouth
+        Board temp = new Board(this.board); //create temp object //dont want to edit the original board
+        temp.board[row][col] = this.board[row+1][col];
+        temp.board[row+1][col] = 0;
+        //update count
+        temp.count++;
+        //add this temp to q
+        q.enqueue(temp);
       }
-      
-      
       
       return q;
     }

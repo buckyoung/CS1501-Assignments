@@ -12,12 +12,14 @@ public class Solver {
     //add initial search node to the pq
     pq.insert(initial);
     
-    //THIS IS SHIT:
+    initial.board.neighbors();
+    
+    /*THIS IS SHIT:
     do{
       SearchNode minNode = pq.delMin(); //pull min
       count++; //iterate count
       
-      if (!minNode.isGoal()){
+      if (!minNode.board.isGoal()){
         Iterator<Board> i = minNode.neighbors; //get neighbor iterator
       
         //create next node and insert it into the PQ
@@ -29,7 +31,7 @@ public class Solver {
       }
          
     }while(!minNode.isGoal());
-    
+    */
     
   }
   
