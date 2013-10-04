@@ -5,6 +5,7 @@ public class Board{
   private int[][] board;
   private int[][] goal;
   private int dimension;
+  private int count;
   
   
 //FINISHED
@@ -14,11 +15,11 @@ public class Board{
        
        //create goal board
        goal = new int[dimension][dimension];
-       int count = 1; 
+       int value = 1; 
        for (int i=0; i<dimension; i++){
          for (int j=0; j<dimension; j++){
-             goal[i][j] = count;
-             count++;
+             goal[i][j] = value;
+             value++; 
          }
        }
        goal[dimension-1][dimension-1] = 0; //set '*'
@@ -44,7 +45,7 @@ public class Board{
         }
       }
       
-      result += Solver.count; //add in current count
+      result += this.count; //add in current count
       return result;
     }
     
@@ -78,7 +79,7 @@ public class Board{
       }
     }//end topmost for
       
-      result += Solver.count; //add in current count
+      result += this.count; //add in current count
       return result;
  }
 
@@ -143,6 +144,17 @@ public class Board{
       }
       
       return result.toString();
+    }
+    
+    
+    //Mutators for current count for hamming's and manhattan
+    public void setCount(int c){
+      count = c;
+      Solver.count = c; //TODO THIS MAY BE A PROBLEM
+    }
+    
+    public int getCount(){
+      return count;
     }
     
 }

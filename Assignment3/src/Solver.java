@@ -39,7 +39,7 @@ public class Solver {
   
  //FINISHED
   public int moves(){ //min number of moves to solve initial board
-    return count;
+    return Solver.count; 
   }
   
   public Iterable<Board> solution(){ //sequence of boards in a shortest solution
