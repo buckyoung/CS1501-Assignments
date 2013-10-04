@@ -5,7 +5,7 @@ public class Board{
   private int[][] board;
   private int[][] goal;
   private int dimension;
-  private int count;
+  public int count;
   
   
 //FINISHED
@@ -97,6 +97,11 @@ public class Board{
              }
            }
       
+      //Pass Final Count to solver!
+      if (result == true){
+        Solver.count = this.count;
+      }
+      
       return result;
     }
     
@@ -128,7 +133,43 @@ public class Board{
     }
     
     public Iterable<Board> neighbors(){ //place all neighboring boards into your iterable Queue (assignment 1)
-      return null;
+      Queue<Board> q = new Queue<Board>();
+      
+      int x=0,y=0;
+      
+      //Search for the asterisk
+      LOOP:for (x=0;x<dimension;x++){
+        for (y=0;y<dimension;y++){
+          if (board[x][y] == 0){ //found!
+            break LOOP;
+          }
+        }
+      } //end LOOP
+      
+      //We now have the location of the asterisk
+      //Let's be careful if it is on the edge of the 2d array:
+      if (x != 0){
+        //swapLeft
+        Board temp = new Board(this.board); //create temp object //dont want to edit the original board
+        temp[x][y] = board[x-1][y];
+        temp[x-1][y] = 0;
+        //update count
+        temp.count++;
+        //add this temp to q
+      }
+      if (x != dimension-1){
+        //swapRight
+      }
+      if (y != 0){
+        //swapNorth
+      }
+      if (y != dimension-1){
+        //swapSouth
+      }
+      
+      
+      
+      return q;
     }
     
     public String toString(){ //string representation of the board (in the output format specified below)
@@ -146,15 +187,5 @@ public class Board{
       return result.toString();
     }
     
-    
-    //Mutators for current count for hamming's and manhattan
-    public void setCount(int c){
-      count = c;
-      Solver.count = c; //TODO THIS MAY BE A PROBLEM
-    }
-    
-    public int getCount(){
-      return count;
-    }
     
 }

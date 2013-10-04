@@ -12,6 +12,7 @@ public class Solver {
     //add initial search node to the pq
     pq.insert(initial);
     
+    //THIS IS SHIT:
     do{
       SearchNode minNode = pq.delMin(); //pull min
       count++; //iterate count
@@ -57,6 +58,9 @@ public class Solver {
              blocks[i][j] = in.readInt();
                              
        Board initial = new Board(blocks);      // solve the puzzle
+       //initialize initial count
+       initial.count = 0;
+       //^very important!
        Solver solver = new Solver(initial);    // print solution to standard output
          
        if (!initial.isSolvable())
