@@ -6,17 +6,18 @@ public class Solver {
   private SearchNode finalNode;
   private MinPQ<SearchNode> pq; //.insert(SN n) //.delMin()
   
+  //FINISHED -- reduncancy with main
   public Solver(Board i){ //find a solution to the initial board (using the A* algorithm)
     initial = new SearchNode(i); //create the initial search node
-    pq = new MinPQ<SearchNode>(); //init pq
     
+  if (isSolvable()){
     //add initial search node to the pq
+    pq = new MinPQ<SearchNode>(); //init pq
     pq.insert(initial);
     
     initial.board.neighbors();
     
     DO: do {
-      
       //Get MinNode from PQ
       SearchNode minNode = pq.delMin();
       
@@ -33,17 +34,26 @@ public class Solver {
       for (Board b : q){
         SearchNode newNode = new SearchNode(b, (minNode.moves+1), minNode);
         //Add to PQ if not the previous
-        if (newNode.board.equals(minNode.board)){
-          System.out.println("Equality!");
+        if (minNode.previous != null){
+           if (!newNode.board.equals(minNode.previous.board)){
+             pq.insert(newNode); //ONLY ADD IF IT ISNT THE PREVIOUS NODE WE JUST CAME FROM
+           }
+        } else {
+          pq.insert(newNode);
         }
-        pq.insert(newNode);
+        
+        
       }
+        
       //Start again
       
     }while(true); //TODO : this is a problem!
 
-    
+  } else { //IS NOT SOLVEABLE
+    System.out.println("Sorry. This board is not solveable.");
   }
+    
+ }
   
   //FINISHED
   public boolean isSolvable(){ //is the initial board solvable? 
@@ -54,7 +64,8 @@ public class Solver {
   public int moves(){ //min number of moves to solve initial board
     return finalNode.moves; 
   }
-  
+
+//FINISHED
   public Iterable<Board> solution(){ //sequence of boards in a shortest solution
     Stack<SearchNode> s = new Stack<SearchNode>();
     Queue<Board> result = new Queue<Board>();
@@ -76,6 +87,7 @@ public class Solver {
     return result;
   }
   
+//FINISHED --- Redundancy here in NoSolutionPossible
   public static void main(String[] args){ //solve a slider puzzle (given below)
     // create initial board from file
        In in = new In(args[0]);
@@ -100,7 +112,8 @@ public class Solver {
        }
   }
   
-   
+  
+//FINISHED
 //PRIVATE INNER CLASS SEARCHNODE
   private class SearchNode implements Comparable { //private inner class Node
     

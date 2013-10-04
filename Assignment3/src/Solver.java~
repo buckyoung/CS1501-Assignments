@@ -16,7 +16,7 @@ public class Solver {
     initial.board.neighbors();
     
     DO: do {
-      
+      System.out.println("Pull");
       //Get MinNode from PQ
       SearchNode minNode = pq.delMin();
       
@@ -28,12 +28,23 @@ public class Solver {
          
       //Find neighbors
       Queue<Board> q = (Queue<Board>)minNode.board.neighbors();
+      
       //Create SearchNodes
       for (Board b : q){
         SearchNode newNode = new SearchNode(b, (minNode.moves+1), minNode);
-        //Add to PQ
-        pq.insert(newNode);
+        //Add to PQ if not the previous
+        if (minNode.previous != null){
+           if (newNode.board.equals(minNode.previous.board)){
+             System.out.println("add");
+             pq.insert(newNode); //ONLY ADD IF IT ISNT THE PREVIOUS NODE WE JUST CAME FROM
+           }
+        } else {
+          pq.insert(newNode);
+        }
+        
+        
       }
+        
       //Start again
       
     }while(true); //TODO : this is a problem!

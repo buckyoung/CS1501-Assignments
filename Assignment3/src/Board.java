@@ -105,9 +105,15 @@ public class Board{
       return result;
     }
     
- //TODO
+ //todo //#################################################
     public boolean isSolvable(){ //is the board solvable?
-      return true;
+      boolean result = true;
+      
+      //Odd
+      
+      //Even
+      
+      return result;
     }
     
 //FINISHED
@@ -186,6 +192,7 @@ public class Board{
       return q;
     }
     
+ //FINISHED
     public String toString(){ //string representation of the board (in the output format specified below)
       StringBuilder result = new StringBuilder();
       
