@@ -115,7 +115,7 @@ public class Board{
       
       //Get number of inversions
       for (int num = 1; num < ((dimension*dimension)-1); num++){ 
-        System.err.print(".");//DEBUG
+
         NEXTNUM:for (int row = 0; row < dimension; row++){
           for (int col = 0; col < dimension; col++){
             //for each index, 
@@ -129,7 +129,6 @@ public class Board{
         }
         
       }
-      System.err.println();
       
       //Odd/even
       if (dimension%2 == 1) { //if dimension is ODD
@@ -137,6 +136,7 @@ public class Board{
         if (inversions%2 == 0){ //even = solvable!
           return true; //RETURN
         } else { //odd, unsolvable!
+          System.out.print("Unsolvable: ");
           return false;
         }
           
@@ -158,6 +158,7 @@ public class Board{
         if(inversions%2 == 1){//odd, solvable!
           return true;
         } else {//even, unsolvable
+          System.out.print("Unsolvable: ");
           return false;
         }
       

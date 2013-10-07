@@ -10,14 +10,14 @@ public class Solver {
   //FINISHED -- reduncancy with main
   public Solver(Board i){ //find a solution to the initial board (using the A* algorithm)
     initial = new SearchNode(i); //create the initial search node
+    finalNode = new SearchNode(null, -1, null);
     solvable = true;
+    
     
   if (initial.board.isSolvable()){
     //add initial search node to the pq
     pq = new MinPQ<SearchNode>(); //init pq
     pq.insert(initial);
-    
-    initial.board.neighbors();
     
     DO: do {
       //Get MinNode from PQ
@@ -145,11 +145,24 @@ public class Solver {
          SearchNode tmp = (SearchNode)n;
          
          //ASSUME HAMMING
+         /*
          if (this.board.hamming()+this.moves == tmp.board.hamming()+tmp.moves){
            result = 0; 
          } else if (this.board.hamming()+this.moves < tmp.board.hamming()+tmp.moves) {
            result = -1;
          } else if (this.board.hamming()+this.moves > tmp.board.hamming()+tmp.moves) {
+           result = 1; 
+         } else {
+           System.out.println("Programmer Error: if-else logic is not mutually exclusive");
+           result = 4242;
+         }
+         */
+         //Assume Manhattan
+         if (this.board.manhattan()+this.moves == tmp.board.manhattan()+tmp.moves){
+           result = 0; 
+         } else if (this.board.manhattan()+this.moves < tmp.board.manhattan()+tmp.moves) {
+           result = -1;
+         } else if (this.board.manhattan()+this.moves > tmp.board.manhattan()+tmp.moves) {
            result = 1; 
          } else {
            System.out.println("Programmer Error: if-else logic is not mutually exclusive");
