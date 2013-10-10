@@ -1,15 +1,15 @@
 
-
 public class Board{
   
   private int[][] board;
-  private int[][] goal;
-  private int dimension;
-  
-  
+  private static int[][] goal;
+  private static int dimension;
+  private static Queue<Board> q = new Queue<Board>();
+ 
 //FINISHED
     public Board(int[][] blocks){ //constuct a board from an N by N array of blocks // where blocks[i][j] = block in row i, column j
-       dimension = blocks.length;
+
+      dimension = blocks.length;
        
        board = new int[dimension][dimension];
        
@@ -19,8 +19,11 @@ public class Board{
            board[x][y] = blocks[x][y];
          }
        }
-       
-       //create goal board
+      
+    }
+    
+    public static void primeGoal(){
+      //create goal board
        goal = new int[dimension][dimension];
        int value = 1; 
        for (int i=0; i<dimension; i++){
@@ -30,9 +33,6 @@ public class Board{
          }
        }
        goal[dimension-1][dimension-1] = 0; //set '*'
-       
-       
-      
     }
       
  //FINISHED
@@ -172,15 +172,17 @@ public class Board{
       
       if (y instanceof Board){
         Board tmp = (Board)y;
-      
-        LOOP:for(int i = 0; i < dimension; i++){
-          for (int j = 0; j < dimension; j++){
-            if (this.board[i][j] != tmp.board[i][j]){
+        
+        LOOP:for (int row = 0; row < dimension; row++){
+          for (int col= 0; col < dimension;col++){
+            if (tmp.board[row][col] != this.board[row][col]){
               result = false;
               break LOOP;
             }
           }
         }
+
+        
       } else {
         result = false;
       }
@@ -190,7 +192,9 @@ public class Board{
     
 //FINISHED
     public Iterable<Board> neighbors(){ //place all neighboring boards into your iterable Queue (assignment 1)
-      Queue<Board> q = new Queue<Board>();
+      while(!q.isEmpty()){
+        q.dequeue();
+      }
 
       int row = 0, col = 0;
       
@@ -205,6 +209,7 @@ public class Board{
       
       //We now have the location of the asterisk
       //Let's be careful if it is on the edge of the 2d array:
+
       if (col != 0){
         //swapLeft
         Board temp = new Board(this.board); //create temp object //dont want to edit the original board
@@ -250,7 +255,7 @@ public class Board{
       
       for (int i = 0; i < dimension; i++){
         for (int j = 0; j < dimension; j++){
-          if(board[i][j] == '0'){
+          if(board[i][j] == 0){
               result.append(" " + "*");
           } else {
             result.append(" " + board[i][j]);

@@ -1,5 +1,4 @@
 import java.util.Stack;
-import java.util.ArrayList;
 
 public class Solver {
   
@@ -7,51 +6,52 @@ public class Solver {
   private SearchNode finalNode;
   private MinPQ<SearchNode> pq; //.insert(SN n) //.delMin()
   private static boolean solvable;
-  private static boolean hammingBool;
-  private static boolean manhattanBool;
+  private static boolean hammingBool = false;
   
   //FINISHED -- reduncancy with main
   public Solver(Board i){ //find a solution to the initial board (using the A* algorithm)
     initial = new SearchNode(i); //create the initial search node
     finalNode = new SearchNode(null, -1, null);
-    solvable = true;
-    
-  if (initial.board.isSolvable()){
+    solvable = initial.board.isSolvable();
+
+  if (solvable){
     
     //add initial search node to the pq
     pq = new MinPQ<SearchNode>(); //init pq
+    SearchNode minNode;
+    Queue<Board> q;
     pq.insert(initial);
     
     DO: do {
-      //Get MinNode from PQ
-      SearchNode minNode = pq.delMin();
       
+      //Get MinNode from PQ
+      minNode = pq.delMin();
+
       //Check for goal
       if (minNode.board.isGoal()){
          finalNode = minNode; //SAVE THE FINAL NODE!
          break DO;
-      }
+      } else{
          
       //Find neighbors
-      Queue<Board> q = (Queue<Board>)minNode.board.neighbors();
+      q = (Queue<Board>)minNode.board.neighbors();
       
       //Create SearchNodes
-      for (Board b : q){
-        
-          
-          SearchNode newNode = new SearchNode(b, (minNode.moves+1), minNode);
-        
-        
-          //Add to PQ if not the previous
-          if (minNode.previous != null){
-             if (!newNode.board.equals(minNode.previous.board)){
-               pq.insert(newNode); //ONLY ADD IF IT ISNT THE PREVIOUS NODE WE JUST CAME FROM
-             }
-          } else {
-            pq.insert(newNode);
+        for (Board b : q){
+   
+        if (minNode.previous != null){
+          if (b.equals(minNode.previous.board)){
+            //dont add
+          } else { 
+            //create and add
+                 pq.insert(new SearchNode(b, (minNode.moves+1), minNode));
+                
           }
+        } else { //initial node (no minNode.previous)
+                 pq.insert(new SearchNode(b, (minNode.moves+1), minNode));
+        }
         
-         
+      }
         
         
       }
@@ -60,9 +60,12 @@ public class Solver {
       
     }while(true); //TODO : this is a problem!
 
+    pq = null;
+    System.gc();//garb collect
+  
     
   } else { //IS NOT SOLVEABLE
-    solvable = false; //helps us short circult the solver.issolvable
+    //do nothing
   }
     
  }
@@ -102,7 +105,38 @@ public class Solver {
 //FINISHED --- Redundancy here in NoSolutionPossible
   public static void main(String[] args){ //solve a slider puzzle (given below)
     // create initial board from file
-       In in = new In(args[0]);
+    int fileIndex = 0;
+    
+    //Determine flags or default
+    if (args.length == 0){
+      System.out.println("USAGE: java Solver file.txt");
+      return;
+    } else if (args.length == 1){
+      hammingBool = false;
+      fileIndex = 0; //set where filename will be
+      System.out.println("No cmd-line flag provided: Defaulting to Manhattan Priority Function.");
+      System.out.println("USAGE: java Solver -h file.txt   //For Hamming Priority Function");
+      System.out.println("OR:    java Solver -m file.txt   //For Manhattan Priority Function");
+      System.out.println("Running... \n");
+    } else if (args.length == 2){
+      if (args[0].equals("-h")){
+        hammingBool = true;
+        fileIndex = 1; //set where filename will be
+        System.out.println("Using Hamming Priority Function\n");
+      } else if (args[0].equals("-m")){
+        hammingBool = false;
+        fileIndex = 1; //set where filename will be 
+        System.out.println("Using Manhattan Priority Function\n");
+      } else {
+        hammingBool = false;
+        fileIndex = 1; //set where filename will be
+        System.out.println("Invalid cmd-line flag: Defaulting to Manhattan Priority Function");
+        System.out.println("USAGE: java Solver -h file.txt   //To Specify Hamming Priority Function");
+        System.out.println("OR:    java Solver -m file.txt   //To Specify Manhattan Priority Function\n");
+    }
+    }
+    
+       In in = new In(args[fileIndex]);
        int N = in.readInt();
        int[][] blocks = new int[N][N];
                                 
@@ -144,6 +178,7 @@ public class Solver {
       board = initial;
       moves = 0;
       previous = null;
+      Board.primeGoal();
     }
     
     @Override
@@ -153,7 +188,6 @@ public class Solver {
       if ( n instanceof SearchNode){
          SearchNode tmp = (SearchNode)n;
          
-
          if(hammingBool){  
          if (this.board.hamming()+this.moves == tmp.board.hamming()+tmp.moves){
            result = 0; 
@@ -161,24 +195,17 @@ public class Solver {
            result = -1;
          } else if (this.board.hamming()+this.moves > tmp.board.hamming()+tmp.moves) {
            result = 1; 
+         } 
          } else {
-           System.out.println("Programmer Error: if-else logic is not mutually exclusive");
-           result = 4242;
-         }
-         }
-         
-         if(manhattanBool){
          if (this.board.manhattan()+this.moves == tmp.board.manhattan()+tmp.moves){
            result = 0; 
          } else if (this.board.manhattan()+this.moves < tmp.board.manhattan()+tmp.moves) {
            result = -1;
          } else if (this.board.manhattan()+this.moves > tmp.board.manhattan()+tmp.moves) {
            result = 1; 
-         } else {
-           System.out.println("Programmer Error: if-else logic is not mutually exclusive");
-           result = 4242;
+         } 
          }
-         }
+         
          
       } else {
         result = -8008;
@@ -192,6 +219,7 @@ public class Solver {
        
        result.append("Manhattan  = " + board.manhattan() + "\n");
        result.append("Hamming    = " + board.hamming() + "\n");
+       result.append("Moves      = " + moves +"\n");
        
        result.append(board.toString());
       
