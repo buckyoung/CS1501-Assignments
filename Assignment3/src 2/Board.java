@@ -250,7 +250,11 @@ public class Board{
       
       for (int i = 0; i < dimension; i++){
         for (int j = 0; j < dimension; j++){
-          result.append(" " + board[i][j]);
+          if(board[i][j] == '0'){
+              result.append(" " + "*");
+          } else {
+            result.append(" " + board[i][j]);
+          }
         }
         result.append("\n");
       }

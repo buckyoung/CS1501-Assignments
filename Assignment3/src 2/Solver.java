@@ -1,4 +1,5 @@
 import java.util.Stack;
+import java.util.ArrayList;
 
 public class Solver {
   
@@ -6,6 +7,8 @@ public class Solver {
   private SearchNode finalNode;
   private MinPQ<SearchNode> pq; //.insert(SN n) //.delMin()
   private static boolean solvable;
+  private static boolean hammingBool;
+  private static boolean manhattanBool;
   
   //FINISHED -- reduncancy with main
   public Solver(Board i){ //find a solution to the initial board (using the A* algorithm)
@@ -13,8 +16,8 @@ public class Solver {
     finalNode = new SearchNode(null, -1, null);
     solvable = true;
     
-    
   if (initial.board.isSolvable()){
+    
     //add initial search node to the pq
     pq = new MinPQ<SearchNode>(); //init pq
     pq.insert(initial);
@@ -34,15 +37,21 @@ public class Solver {
       
       //Create SearchNodes
       for (Board b : q){
-        SearchNode newNode = new SearchNode(b, (minNode.moves+1), minNode);
-        //Add to PQ if not the previous
-        if (minNode.previous != null){
-           if (!newNode.board.equals(minNode.previous.board)){
-             pq.insert(newNode); //ONLY ADD IF IT ISNT THE PREVIOUS NODE WE JUST CAME FROM
-           }
-        } else {
-          pq.insert(newNode);
-        }
+        
+          
+          SearchNode newNode = new SearchNode(b, (minNode.moves+1), minNode);
+        
+        
+          //Add to PQ if not the previous
+          if (minNode.previous != null){
+             if (!newNode.board.equals(minNode.previous.board)){
+               pq.insert(newNode); //ONLY ADD IF IT ISNT THE PREVIOUS NODE WE JUST CAME FROM
+             }
+          } else {
+            pq.insert(newNode);
+          }
+        
+         
         
         
       }
@@ -144,8 +153,8 @@ public class Solver {
       if ( n instanceof SearchNode){
          SearchNode tmp = (SearchNode)n;
          
-         //ASSUME HAMMING
-         /*
+
+         if(hammingBool){  
          if (this.board.hamming()+this.moves == tmp.board.hamming()+tmp.moves){
            result = 0; 
          } else if (this.board.hamming()+this.moves < tmp.board.hamming()+tmp.moves) {
@@ -156,8 +165,9 @@ public class Solver {
            System.out.println("Programmer Error: if-else logic is not mutually exclusive");
            result = 4242;
          }
-         */
-         //Assume Manhattan
+         }
+         
+         if(manhattanBool){
          if (this.board.manhattan()+this.moves == tmp.board.manhattan()+tmp.moves){
            result = 0; 
          } else if (this.board.manhattan()+this.moves < tmp.board.manhattan()+tmp.moves) {
@@ -168,6 +178,8 @@ public class Solver {
            System.out.println("Programmer Error: if-else logic is not mutually exclusive");
            result = 4242;
          }
+         }
+         
       } else {
         result = -8008;
       }
