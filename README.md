@@ -14,4 +14,7 @@ Accepts a file of binary expressions (and initial truth values of each atom) and
 The expressions are then normalized (disjunctively ) and evaluated according to the initial, given truth values. 
 
 ###Assignment 3
-Solver of the 8puzzle problem using an A* algorithm. Both utilizing the Manhattan and Hamming priority functions for the best-first search.
+Solver of the 8puzzle problem using an A* algorithm. Both utilizing the Manhattan and Hamming priority functions for a best-first search.
+
+###Assignment 4
+Working with undirectional graphs and weighted edges. Read a "network" (graph) from a file with V vertices and E edges. Get user input in order to change the network: "clients" (vertices) go UP or DOWN, "latency" (weight on edge) changes, reports are created (shortest paths, Eulerian tours/paths, MSTs).
