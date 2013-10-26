@@ -7,7 +7,7 @@ public class Edge implements Comparable<Edge> {
 
     private final int v;
     private final int w;
-    private int weight;
+    private double weight;
     private boolean active; //Flag for an "up" or active connection
 
     /**
@@ -19,7 +19,7 @@ public class Edge implements Comparable<Edge> {
      * @throws java.lang.IndexOutOfBoundsException if either <tt>v</tt> or <tt>w</tt> 
      *    is a negative integer
      */
-    public Edge(int v, int w, int weight) {
+    public Edge(int v, int w, double weight) {
         if (v < 0) throw new IndexOutOfBoundsException("Vertex name must be a nonnegative integer");
         if (w < 0) throw new IndexOutOfBoundsException("Vertex name must be a nonnegative integer");
         this.v = v;
@@ -32,7 +32,7 @@ public class Edge implements Comparable<Edge> {
      * Returns the weight of the edge.
      * @return the weight of the edge
      */
-    public int weight() {
+    public double weight() {
         return weight;
     }
 
@@ -76,7 +76,13 @@ public class Edge implements Comparable<Edge> {
      * @return a string representation of the edge
      */
     public String toString() {
-      return String.format("| %2d -%2d |%3dns: \t%s", v, w, weight, active?"Up":"Down");
+      String result;
+      if(active){
+        result = String.format("[%d-%d, %1.2f, Up]", v, w, weight);
+      } else {
+        result = String.format("[%d-%d, ----, Down]", v, w);
+      }
+      return result;
     }
     
     //sets state of edge UP or DOWN

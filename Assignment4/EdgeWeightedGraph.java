@@ -111,7 +111,7 @@ public class EdgeWeightedGraph {
         for (int v = 0; v < V; v++) {
             int selfLoops = 0;
             for (Edge e : adj(v)) {
-                if (e.other(v) > v) {
+                if (e.other(v) > v ) {
                     list.add(e);
                 }
                 // only add one copy of each self loop
@@ -133,7 +133,7 @@ public class EdgeWeightedGraph {
     public String toString() {
         String NEWLINE = System.getProperty("line.separator");
         StringBuilder s = new StringBuilder();
-        s.append(V + " " + E + NEWLINE);
+        s.append("Total Vertices: " + V + "\nTotal Edges: " + E + NEWLINE);
         for (int v = 0; v < V; v++) {
             s.append(v + ": ");
             for (Edge e : adj[v]) {
@@ -144,6 +144,14 @@ public class EdgeWeightedGraph {
         return s.toString();
     }
 
+    //------------------------------------------My Functions!-----------------------------//
+    //graph report
+    public void report(){
+       System.out.println(this);
+       //TODO
+       System.out.println("TODO: Network is connected... connected components!");
+    }
+    
     //Enables edge v w and edge w v 
     public void edgeUp(int v, int w){
       boolean found = false;
@@ -211,23 +219,61 @@ public class EdgeWeightedGraph {
         if (e.other(v) == w){
           //FOUND
           found = true;
+          if (weight <= 0){
+            e.setActive(false);
+            System.out.println("Edge " +v+ "-" +w+ " went down because weight was <= 0.");
+          } else {
+            e.setActive(true);
             e.setWeight(weight);
-            System.out.println("Edge " +v+ "-" +w+ " has a new weight of " + weight);
+            System.out.println("Edge " +v+ "-" +w+ " is active with a new weight of " + weight);
+          }
           break;
           }
         }
       if (!found){
-        System.out.println("Could not find edge with vertex " +v+ " and " +w);
+        //CREATE
+        addEdge(new Edge(v, w, weight));
+        System.out.println("Edge " +v+ "-" +w+ " was created with a weight of " + weight);
       } else { //find it for the reverse
        for (Edge f : adj[w]){
             if (f.other(w) == v){
               //FOUND
-              f.setWeight(weight);
+              if (weight <= 0){
+                f.setActive(false);
+              } else {
+                f.setActive(true);
+                f.setWeight(weight);
+              }
               break;
             }
       }
       }
        
+    }
+    
+    //minimally spanning tree
+    public void mst(){
+             PrimMST mst = new PrimMST(this);
+         for(Edge e : mst.edges()){
+            System.out.println(e);
+         }
+         System.out.println("Total Edge Weight: " + mst.weight());
+    }
+    
+    //shortest path
+    public void shortest(int i, int j){
+      EdgeWeightedDigraph g = new EdgeWeightedDigraph(this);
+      DijkstraSP sp = new DijkstraSP(g, i); //from i to every other node
+      if (sp.hasPathTo(j)){ //has path
+        System.out.println("Total Length: " + sp.distTo(j));
+        for (DirectedEdge e : sp.pathTo(j)){
+          System.out.print(e+"   ");
+        }
+        System.out.print("\n");
+      } else { //no path to
+        System.out.println("There is no path from " + i + " to " + j);
+      }
+      
     }
 
 }

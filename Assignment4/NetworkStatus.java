@@ -20,7 +20,7 @@ public class NetworkStatus{
         graph = new EdgeWeightedGraph(in);
       
       System.out.println("Network read from file successfully.");
-      System.out.println("\nYou may now interact with the network.\nType \"H\" for a list of commands.");
+      System.out.println("You may now interact with the network.\n\nType \"H\" for a list of commands.");
       
         
         
@@ -62,19 +62,13 @@ public class NetworkStatus{
      
      switch(c){
        case 'r': //report
-         Stack temp = new Stack();
-       for (Edge e : graph.edges()){
-         temp.push(e);
-       }
-       while (!temp.isEmpty()){
-         System.out.println(temp.pop());
-       }
+         graph.report();
          break;
        case 'm': //MST
-         
+         graph.mst();
          break;
        case 's': //shortest path
-         
+         graph.shortest(in.readInt(), in.readInt());
          break;
        case 'd': //down
          graph.edgeDown(in.readInt(), in.readInt());
@@ -133,15 +127,15 @@ public class NetworkStatus{
   //Displays the list of commands
   private static void displayHelp(){
     System.out.println("List of Commands:");
-    System.out.println("R |(R)eport| : Displays the current active network (active nodes, edges, and weights), status (connected or not), and connected components.");
-    System.out.println("M |(M)inimum Spanning Tree| : Displays the vertices and edges (with weights) in the current MST of the network.");
-    System.out.println("S i j |(S)hortest Path| : Displays the shortest path (by latency) from vertex i to vertex j.");
-    System.out.println("D i j |(D)own| : The edge from vertex i to vertex j will go down (become unavailable).");
-    System.out.println("U i j |(U)p| : The edge from vertex i to vertex j will come back up (become available).");
-    System.out.println("C i j x |(C)hange Weight| : Changes the weight of the edge from vertex i to vertex j to value x. If x<= 0, the edge will be removed. If x > 0 the edge will be updated or created.");
-    System.out.println("E |(E)ulerian| : Displays a Eulerian tour or path if it exists.");
-    System.out.println("H |(H)elp| : Displays this list of commands.");
-    System.out.println("Q |(Q)uit| : Exits the program.");
+    System.out.println("R         --   (R)eport");
+    System.out.println("M         --   (M)inimum Spanning Tree");
+    System.out.println("S i j     --   (S)hortest Path");
+    System.out.println("D i j     --   (D)own");
+    System.out.println("U i j     --   (U)p");
+    System.out.println("C i j x   --   (C)hange Weight   :If x<=0, the edge will be removed. \n                                 :If x>0, the edge will be updated or created.");
+    System.out.println("E         --   (E)ulerian");
+    System.out.println("H         --   (H)elp");
+    System.out.println("Q         --   (Q)uit");
   }
   
 }
