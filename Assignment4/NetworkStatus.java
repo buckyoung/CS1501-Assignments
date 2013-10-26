@@ -132,7 +132,7 @@ public class NetworkStatus{
     System.out.println("S i j     --   (S)hortest Path");
     System.out.println("D i j     --   (D)own");
     System.out.println("U i j     --   (U)p");
-    System.out.println("C i j x   --   (C)hange Weight   :If x<=0, the edge will be removed. \n                                 :If x>0, the edge will be updated or created.");
+    System.out.println("C i j x   --   (C)hange Weight :If x<=0, the edge will go down. \n                               :If x>0, the edge will come up and be updated or created.");
     System.out.println("E         --   (E)ulerian");
     System.out.println("H         --   (H)elp");
     System.out.println("Q         --   (Q)uit");

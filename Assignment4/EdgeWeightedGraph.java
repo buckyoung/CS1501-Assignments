@@ -148,8 +148,23 @@ public class EdgeWeightedGraph {
     //graph report
     public void report(){
        System.out.println(this);
-       //TODO
-       System.out.println("TODO: Network is connected... connected components!");
+       //Connected components
+       CC cc = new CC(this);
+       System.out.println(cc.count()==1?"Network is connected.":"Network is not connected");
+       
+       Queue[] components = new Queue[cc.count()];
+       for (int i = 0; i < cc.count(); i++){
+         components[i] = new Queue();
+       }
+       
+       for(int i = 0; i < V; i++){
+         components[cc.id(i)].enqueue(i);
+       }
+       
+       for (int i = 0; i < cc.count(); i++){
+         System.out.println((i+1)+": " +components[i]);
+       }
+       
     }
     
     //Enables edge v w and edge w v 
@@ -253,11 +268,18 @@ public class EdgeWeightedGraph {
     
     //minimally spanning tree
     public void mst(){
-             PrimMST mst = new PrimMST(this);
+       CC cc = new CC(this);
+       if(cc.count()==1){ //connected network!
+         PrimMST mst = new PrimMST(this);
          for(Edge e : mst.edges()){
             System.out.println(e);
          }
          System.out.println("Total Edge Weight: " + mst.weight());
+       } else { //not connected!!!!
+         System.out.println("Network not connected: No MST.");
+       }
+         
+         
     }
     
     //shortest path

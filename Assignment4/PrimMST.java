@@ -101,7 +101,7 @@ public class PrimMST {
         marked[v] = true;
         for (Edge e : G.adj(v)) {
             int w = e.other(v);
-            if (marked[w] || !e.isActive()) continue;         // v-w is obsolete edge
+            if (marked[w] || !e.isActive()) continue;         // v-w is obsolete edge //BUCK
             if (e.weight() < distTo[w]) {
                 distTo[w] = e.weight();
                 edgeTo[w] = e;
