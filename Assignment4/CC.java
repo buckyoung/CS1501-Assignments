@@ -72,7 +72,7 @@ public class CC {
         size[count]++;
 
         for (Edge e : G.adj(v)) {
-          if (e.isActive()){
+          if (e.isActive()){ //MUST BE ACTIVE!
             if (!marked[e.other(v)]) {
                 dfs(G, e.other(v));
             }

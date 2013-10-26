@@ -42,10 +42,7 @@ public class EdgeWeightedGraph {
         }
     }
 
-    /**
-     * Initializes a new edge-weighted graph that is a deep copy of <tt>G</tt>.
-     * @param G the edge-weighted graph to copy
-     */
+     // Deep copies for Eulerian
     public EdgeWeightedGraph(EdgeWeightedGraph G) {
         this(G.V());
         this.E = G.E();
@@ -53,7 +50,10 @@ public class EdgeWeightedGraph {
             // reverse so that adjacency list is in same order as original
             Stack<Edge> reverse = new Stack<Edge>();
             for (Edge e : G.adj[v]) {
-                reverse.push(e);
+              if (!e.marked){ //consider on unmarked!
+                reverse.push(new Edge(e.either(),e.other(e.either()), e.weight()));
+              }
+              
             }
             for (Edge e : reverse) {
                 adj[v].add(e);
@@ -297,5 +297,194 @@ public class EdgeWeightedGraph {
       }
       
     }
+    
+    //eulerian cycle/path
+    public void eulerian(){
+      CC cc = new CC(this);
+       if(cc.count()==1){ //connected network!
+         //Count odd degrees
+         int odd = 0;
+         for (int v = 0; v < V; v++){
+           int bagSize = adj[v].size();
+           int upSize = 0; 
+           for (Edge e: adj[v]){
+             if (e.isActive()){
+               upSize++;
+             }
+           }
+           if ((upSize & 1) == 1){ //bitwise AND 1, if ==1 then ODD!
+             odd++;
+           }
+         }
+         if (odd == 2){ //Path!
+           printEulerianPath();           
+         } else if (odd == 0) { //Cycle!
+           printEulerianCycle();
+         } else { //Nope!
+           System.out.println("No Eulerian cycle or path exists.");
+         }
+         
+         
+       } else { //not connected
+          System.out.println("Network not connected: No Eulerian Path or Cycle.");
+       }
+    }
+    
+    //unmark all unless !active
+    private void setAllEdgeMarks(){
+      for (Edge e : this.edges()){
+        if (e.isActive()){
+          e.marked = false;
+        } else { //not active
+          e.marked = true;
+        }
+      }
+    }
 
+    //get edge
+    private Edge getAnyEdge(){
+      Edge result = null;
+      LOOP: for (int v = 0; v < V; v++) {
+            for (Edge e : adj(v)) {
+                result = e;
+                if (e != null)
+                  break LOOP;
+            }
+        }
+       return result;
+    }
+    //print cycle
+    private void printEulerianCycle(){
+                 System.out.println("Eulerian cycle exists.");
+    setAllEdgeMarks();
+           Stack<Integer> s = new Stack<Integer>();
+           //Choose any vertex v and push onto stack
+           Edge q = getAnyEdge();
+           int v = q.either(); //vertex
+           s.push(v);
+           //While stack.!empty
+           while (!s.isEmpty()){
+           //peek at vertex u
+             int u = s.peek();
+             boolean foundUnmarkedEdge = false;
+             
+             //if it has an unmarked edge to another vertex w, push w to stack and mark u-w edge
+             for (Edge e: adj[u]){       
+               if (!e.marked){ //must be unmarked (and active -- but that is taken care of in setAllEdgeMarks())
+                 foundUnmarkedEdge = true;  
+                 int w = e.other(u);
+                 s.push(w); // push
+                 e.marked = true; //mark
+                 for(Edge eee : adj[w]){ //mark the "direction coming back", too
+                   if (eee.other(w) == u){
+                     eee.marked = true;
+                   }
+                 }
+                 break;
+               }
+             }
+             
+             //else pop u and print
+             if(!foundUnmarkedEdge){
+                System.out.print(s.pop());
+                if (s.size() > 0){
+                  System.out.print(" - ");
+                }
+             }
+           } //end while
+           
+          System.out.print("\n");
+    }
+    
+    //path
+    private void printEulerianPath(){
+         System.out.println("Eulerian path exists.");
+         
+         //Lets deep copy the graph
+         //consider only actives:
+         setAllEdgeMarks();
+         EdgeWeightedGraph copy = new EdgeWeightedGraph(this);
+         int startVertex = -1;
+        
+          //Find an Odd Degree'd vertex to start at
+         for (int v = 0; v < copy.V(); v++){
+           int bagSize = copy.adj[v].size();
+           int upSize = 0; 
+           for (Edge e: copy.adj[v]){
+             if (e.isActive()){
+               upSize++;
+             }
+           }
+           
+           if ((upSize & 1) == 1){ //bitwise AND 1, if ==1 then ODD!
+             startVertex = v;
+             break;
+           }
+         }
+         //we now have a starting point! and a copy of the graph.
+         //follow edges
+         //chose one whose deletion would not disconnect the graph...
+         
+         Stack<Integer> stack = new Stack<Integer>();
+         
+         stack.push(startVertex);
+  
+         while(!stack.isEmpty()){
+           //peek
+           int u = stack.peek();
+           boolean foundUnmarkedEdge = false;
+           int unmarkedVertexes= 0;
+           
+           //get all the unmarked vertexes
+           for(Edge e : copy.adj[u]){
+             if (!e.marked){
+               unmarkedVertexes++;
+             }
+           }
+           
+           
+           
+            //if it has an unmarked edge to another vertex w, push w to stack and mark u-w edge
+           //unless it disconnects the graph, then try another edge...
+           for (Edge e : copy.adj[u]){ //for each edge of the vertex
+             if (!e.marked){
+               //try to mark
+               unmarkedVertexes--;
+               e.setActive(false);
+               
+               //Check for disconnected components
+               CC cc = new CC(copy);
+               if (cc.count() != 1 && unmarkedVertexes>0){ //BAD! Disconnects graph, but if it is our only choice then oh well
+                 //Try another edge...
+                 e.setActive(true);//reset the active;
+                 
+               } else { //ok, good, follow the edge
+                  foundUnmarkedEdge = true;
+                  int w = e.other(u);
+                  stack.push(w);
+                  e.marked = true;
+                 for(Edge eee : copy.adj[w]){ //mark the "direction coming back", too
+                   if (eee.other(w) == u){
+                     eee.marked = true;
+                   }
+                 }
+                  break;
+               }
+             }
+         }//end for
+           
+            //else pop u and print
+             if(!foundUnmarkedEdge){
+                System.out.print(stack.pop());
+                if (stack.size() > 0){
+                  System.out.print(" - ");
+                }
+             }
+             
+         }//end while
+         
+         System.out.print("\n");
+
+    }
+           
 }

@@ -80,7 +80,7 @@ public class NetworkStatus{
          graph.changeWeight(in.readInt(), in.readInt(), in.readInt());
          break;
        case 'e': //eulerian
-         
+         graph.eulerian();
          break;
        case 'h': //help
          displayHelp();

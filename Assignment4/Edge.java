@@ -9,6 +9,7 @@ public class Edge implements Comparable<Edge> {
     private final int w;
     private double weight;
     private boolean active; //Flag for an "up" or active connection
+    public boolean marked;
 
     /**
      * Initializes an edge between vertices <tt>v/tt> and <tt>w</tt> of
@@ -26,6 +27,7 @@ public class Edge implements Comparable<Edge> {
         this.w = w;
         this.weight = weight;
         this.active = true; //init active
+        this.marked = false;
     }
 
     /**
