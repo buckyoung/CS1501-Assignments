@@ -36,7 +36,7 @@ public class EdgeWeightedGraph {
         for (int i = 0; i < E; i++) {
             int v = in.readInt();
             int w = in.readInt();
-            int weight = in.readInt();
+            double weight = in.readDouble();
             Edge e = new Edge(v, w, weight);
             addEdge(e);
         }
