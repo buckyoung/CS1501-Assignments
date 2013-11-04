@@ -1,3 +1,4 @@
+
 /*************************************************************************
  * Note: This code was adapted from Section 4.3 of Algorithms, 4th Edition by Robert Sedgewick and Kevin Wayne.
  * Most of the code is theirs to claim, however modifications and additions were made in order to complete an
@@ -96,7 +97,7 @@ public class Edge implements Comparable<Edge> {
       return active;
     }
    //Changes the weight of an edge
-   public void setWeight(int weight){
+   public void setWeight(double weight){
      this.weight = weight;
    }
     

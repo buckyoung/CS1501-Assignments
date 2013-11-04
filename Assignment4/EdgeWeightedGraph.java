@@ -227,7 +227,7 @@ public class EdgeWeightedGraph {
     }
     
     //changes the weight of edge v w and edge w v
-    public void changeWeight(int v, int w, int weight){
+    public void changeWeight(int v, int w, double weight){
       boolean found = false;
       
       for (Edge e : adj[v]){

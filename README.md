@@ -17,4 +17,4 @@ The expressions are then normalized (disjunctively ) and evaluated according to 
 Solver of the 8puzzle problem using an A* algorithm. Both utilizing the Manhattan and Hamming priority functions for a best-first search.
 
 ###Assignment 4
-Working with undirectional graphs and weighted edges. Read a "network" (graph) from a file with V vertices and E edges. Get user input in order to change the network: "clients" (vertices) go UP or DOWN, "latency" (weight on edge) changes, reports are created (shortest paths, Eulerian tours/paths, MSTs).
+Working with undirectional graphs and weighted edges. Read a "network" (graph) from a file with V vertices and E edges. Get user input in order to change the network: connections (edges) become active or inactive, "latency" (weight on edge) changes, and reports can be created (shortest paths, Eulerian tours/paths, MSTs).

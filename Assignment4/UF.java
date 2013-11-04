@@ -1,3 +1,7 @@
+/*
+ *  Note: This code was adapted from Section 4.3 of Algorithms, 4th Edition by Robert Sedgewick and Kevin Wayne.
+ *  Modifications and additions were made by Buck Young in order to complete an assignment for the University of Pittsburgh.
+ */
 /****************************************************************************
  *  Compilation:  javac UF.java
  *  Execution:    java UF < input.txt
