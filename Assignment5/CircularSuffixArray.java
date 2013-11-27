@@ -41,9 +41,9 @@ public class CircularSuffixArray {
       Character firstChar = indexMinusOne.charAt(0); //get the char at position 0 of the indexi-1
       String newString = indexMinusOne.substring(1, s.length()); //create a new string of last section of word
       newString = newString.concat(firstChar.toString()); //append the first char to the end of it
-      index[i] = new Node(newString, i);//store it in index
+      index[i] = new Node(newString, i);//store it in index   
     }
-    
+
     Arrays.sort(index); //Sort the words!
   }
   
@@ -53,6 +53,18 @@ public class CircularSuffixArray {
   
   public int index(int i){               // returns index of ith sorted suffix - 10 points
     return index[i].getIndex();
+  }
+  
+  
+  public String getLastColumn(){ //returns the last column of the index[]
+    String result ="";
+    for(int i = 0; i < this.length(); i++){
+      String w = index[i].getWord();
+      Character c = w.charAt(this.length()-1);
+      result = new String(result.concat(c.toString()));
+    }
+    
+    return result;
   }
   
 }//end class
