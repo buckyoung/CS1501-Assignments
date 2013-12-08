@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 public class BurrowsWheeler {
    // apply Burrows-Wheeler encoding, reading from standard input and writing to standard output
   public static void encode(){//    - 20 points
@@ -48,7 +50,7 @@ public class BurrowsWheeler {
         
       }
       
-      InsertionX.sort(a);
+      Arrays.sort(a);
     }
     
     BinaryStdOut.write(a[finalIndex]);
